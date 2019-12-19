@@ -8,8 +8,9 @@ SeuratDEGenes(X, x.low.cutoff = 0.1, x.high.cutoff = 3,
   y.cutoff = 0.15, num.replicate = 100, num.cores = detectCores() -
   1, do.par = TRUE, pcs.use = 1:5, pc.pval = 1e-10,
   max.per.pc = 200, dims.use = 1:10, k.param = 30,
-  resolution = 0.8, min.pct = 0.2, thresh.use = 0.2,
-  max.per.cluster = 30, de.pval = 0.05, size = 500)
+  resolution = 0.8, test.use = "wilcox", min.pct = 0.2,
+  min.diff.pct = -Inf, logfc.threshold = 0.2, max.per.cluster = 30,
+  de.pval = 0.05, size = 500)
 }
 \arguments{
 \item{size}{}

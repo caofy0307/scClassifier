@@ -1,7 +1,7 @@
-#' @title Dana Pe'er's random walking algorithm
+#' @title Single random walking algorithm
 #'
 #' @description
-#' \code{DanaRandomWalk}
+#' \code{SimpleRandomWalk}
 #'
 #' @details
 #'
@@ -29,15 +29,15 @@
 #' @examples
 #'
 
-DanaRandomWalk <- function(X,
-                           Z,
-                           labeled = NULL,
-                           unlabeled = NULL,
-                           genes.use = NULL,
-                           neighbor.size = 15,
-                           do.pca = TRUE, pca.params = 15,
-                           thresh = 0.9,
-                           BPPARAM = SerialParam())
+SimpleRandomWalk <- function(X,
+                             Z,
+                             labeled = NULL,
+                             unlabeled = NULL,
+                             genes.use = NULL,
+                             neighbor.size = 15,
+                             do.pca = TRUE, pca.params = 15,
+                             thresh = 0.9,
+                             BPPARAM = SerialParam())
 {
 
   if (!is.null(genes.use)) {
@@ -77,12 +77,10 @@ DanaRandomWalk <- function(X,
   L <- as.matrix(dist(t(X), method = "euclidean"))
   S <- bplapply(1:ncol(L), function(i, X, k, kf) {
     s.x <- sort(X[i,])[k+1]
-    sd.x <- sd(X[i,])
     Y <- sapply(i:ncol(X), function(j){
       s.y <- sort(X[j,])[k+1]
-      sd.y <- sd(X[j,])
       if (X[i,j] < s.x) {
-        return(kf(X[i,j],sd.x,sd.y))
+        return(kf(X[i,j],s.x,s.y))
       }else{
         return(0)
       }

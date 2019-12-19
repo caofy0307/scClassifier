@@ -52,7 +52,7 @@ DirichletMultinomialClassifier <- function(X,
     X <- as.matrix(X, ncol = 1)
   }
 
-  X <- X[genes.use, cells.use]
+  X <- X[genes.use, cells.use, drop = F]
   if (!is.null(X.cluster)) {
     X.cluster <- X.cluster[cells.use]
     X <- tapply(1:ncol(X), X.cluster, function(i) rowMeans(X[,i]))

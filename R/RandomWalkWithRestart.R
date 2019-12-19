@@ -1,7 +1,7 @@
-#' @title Dana Pe'er's random walking algorithm
+#' @title Random walking with restart algorithm
 #'
 #' @description
-#' \code{DanaRandomWalk}
+#' \code{RandomWalkWithRestart}
 #'
 #' @details
 #'
@@ -11,6 +11,7 @@
 #' @param neighbor.size
 #' @param do.pca
 #' @param pca.param
+#' @param tau
 #' @param alpha
 #' @param BPPARAM
 #'
@@ -20,6 +21,7 @@
 #'
 #' @import BiocParallel
 #' @import rsvd
+#' @import expm
 #'
 #' @author Xiaohan Chen <1356957916@qq.com>
 #' @author Feng Zeng <zengfeng@xmu.edu.cn>
@@ -27,13 +29,14 @@
 #' @examples
 #'
 
-AkalinRandomWalk <- function(X,
-                             Z,
-                             genes.use = NULL,
-                             neighbor.size = 15,
-                             do.pca = TRUE, pca.params = 15,
-                             alpha = 0.1,
-                             BPPARAM = SnowParam())
+RandomWalkWithRestart <- function(X,
+                                  Z,
+                                  genes.use = NULL,
+                                  neighbor.size = 15,
+                                  do.pca = TRUE, pca.params = 15,
+                                  tau = Inf,
+                                  alpha = 0.1,
+                                  BPPARAM = SnowParam())
 {
 
   if (!is.null(genes.use)) {
@@ -52,7 +55,7 @@ AkalinRandomWalk <- function(X,
   # adjacency matrix
   A <- apply(L, 1, function(x){
     s <- sort(abs(x))[neighbor.size+1]
-    y <- exp(-(x/sd(x))**2)
+    y <- exp(-(x/s)**2)
     i <- abs(x) > s
     y[i] <- 0
     return(y)
@@ -60,7 +63,13 @@ AkalinRandomWalk <- function(X,
   diag(A) <- 0
 
   A <- apply(A, 2, function(x) x/sum(x))
-  P <- (1-alpha) * MASS::ginv(diag(rep(1, ncol(A))) - alpha * A) %*% Z
+  if (is.infinite(tau)) {
+    D <- (1-alpha) * MASS::ginv(diag(rep(1, ncol(A))) - alpha * A)
+  }else{
+    D <- alpha * A + diag(rep(1-alpha, ncol(A)))
+    D <- D %^% tau
+  }
+  P <- D %*% Z
 
   results <- list(celltype = factor(apply(P, 1, function(x) names(x)[which.max(x)])),
                   score = apply(P, 1, max),

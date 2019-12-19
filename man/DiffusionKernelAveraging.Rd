@@ -6,7 +6,7 @@
 \usage{
 DiffusionKernelAveraging(X, Z, genes.use = NULL,
   distance.method = c("euclidean", "manhattan"), neighbor.size = 15,
-  neighbor.scale = 0.3, gamma = 0.01, tau = 15, do.pca = TRUE,
+  neighbor.scale = 0.3, gamma = 0, tau = 15, do.pca = TRUE,
   pca.params = 15, to.diffuse = NULL, diffuse.thresh = NULL)
 }
 \arguments{

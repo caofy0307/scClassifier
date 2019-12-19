@@ -34,7 +34,7 @@ DiffusionKernelAveraging <- function(X,
                                      genes.use = NULL,
                                      distance.method = c("euclidean", "manhattan"),
                                      neighbor.size = 15, neighbor.scale = 0.3,
-                                     gamma = 0.01, tau = 15,
+                                     gamma = 0, tau = 15,
                                      do.pca = TRUE, pca.params = 15,
                                      to.diffuse = NULL,
                                      diffuse.thresh = NULL)
@@ -61,8 +61,8 @@ DiffusionKernelAveraging <- function(X,
     y[i] <- exp(-(x[i]/(neighbor.scale*xs))**2)
     return(y)
   })
-  diag(SS) <- 0
   SS <- t(SS) + SS
+  diag(SS) <- diag(SS) * 0.5
   SSD <- diag(rowSums(SS) ** (-0.5))
   SS <- SSD %*% SS %*% SSD
 
