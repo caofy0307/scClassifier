@@ -23,6 +23,10 @@ Therefore, the basic steps of the use of scClassifier are as follows,
 
 This quick tutorial is to walk through the above steps of scClassifier by applying it to analyze a simple [PBMC](Tutorial/pbmc3k.RData) scRNA-seq dataset.
 
+Before going through the tutorial, users should download the PBMC scRNA-seq dataset and the reference database from [Figshare](https://figshare.com/articles/scClassifier_s_tutorial_datasets/11407743), and put these two datasets in the tutorial directory. 
+
+Datasets can be retrieved here https://figshare.com/articles/scClassifier_s_tutorial_datasets/11407743.
+
 ## Step Zero
 
 First, we load the required packages, PBMC scRNA-seq dataset, and the reference database.
