@@ -23,7 +23,7 @@ Rscript --vanilla scClassifier-Install.R
 ```
 
 
-* To get started, check out the Quick Start Tutorial: ([View](Tutorial/scClassifier-Human-PBMC.html)) ([Download](Tutorial/scClassifier-Human-PBMC.Rmd))
+* To get started, check out the Quick Start Tutorial: ([View](Tutorial/scClassifier-Human-PBMC.pdf)) ([Download](Tutorial/scClassifier-Human-PBMC.Rmd))
 
 
 #### 2019/12/16:
